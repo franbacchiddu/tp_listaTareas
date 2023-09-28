@@ -1,4 +1,4 @@
-TABLA USUARIOS
+ -- TABLA USUARIOS
 
 CREATE TABLE usuarios (
   id int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -11,11 +11,15 @@ CREATE TABLE usuarios (
 ) ENGINE=InnoDB;
 
 
-TABLA TAREAS
+-- TABLA TAREAS
 
 CREATE TABLE tareas (
   id INT AUTO_INCREMENT,
   tarea VARCHAR(255),
   completado TINYINT,
-  PRIMARY KEY (id)
+  fecha DATE,
+  categoria VARCHAR(45),
+  nombre_usuario VARCHAR(45),
+  PRIMARY KEY (id),
+  FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
 );
