@@ -41,7 +41,22 @@
                     <input name = "agregar_tarea" id= "agregar_tarea" class="btn btn-primary" type="submit" value="Agregar tarea">
                 </form>
             </div>
-            <ul class="list-group">
+            <div class="mb-3">
+            <form action="" method="post" id="form_filtrado">
+                <label for="filtro_categoria" class="form-label">Filtrar tarea por Categoría:</label>
+                    <select class="form-select" name="filtro_categoria" id="filtro_categoria">
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option value="laboral">Laboral</option>
+                        <option value="domestica">Doméstica</option>
+                        <option value="escolar">Escolar</option>
+                        <option value="personal">Personal</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary mt-2" value="Filtrar">
+                    <button class="btn btn-secondary mt-2" id="limpiar_filtro">Limpiar Filtro</button>    
+            </form>
+        </div>  
+            <ul class="list-group" id="lista_tareas">
                 <?php foreach ($registros as $registro) : ?>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                 <form class="form-check" action="" method="post">
@@ -64,9 +79,29 @@
     </div>
     </div>
     </main>
-    <footer>
-        <!--FOOTER ACÁ-->
-</footer>
+<script>
+    document.getElementById('form_filtrado').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formData = new FormData(this);
+    fetch('tareas.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        var listaTareas = document.getElementById('lista_tareas');
+        listaTareas.innerHTML = data.html; // Actualicé esta línea
+    })
+    .catch(error => console.error('Error:', error));
+});
+</script>
+<script>
+    document.getElementById('limpiar_filtro').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('filtro_categoria').value = ''; 
+        document.getElementById('form_filtrado').submit(); 
+    });
+</script>                    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
