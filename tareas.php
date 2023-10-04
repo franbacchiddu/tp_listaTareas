@@ -73,7 +73,6 @@ if (isset($_POST['filtro_categoria'])) {
 
 }
 
-
 $sql="SELECT * FROM tareas";
 $registros=$conn->query($sql);
 

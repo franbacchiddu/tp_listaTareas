@@ -13,7 +13,7 @@
 <body>
 <header>
     <!--HEADER-->
-    <h1>En este repositorio solo se hacen pruebas</h1>
+    <h1>Program1 TP</h1>
 </header>
 
     <main class="container">
@@ -68,6 +68,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="ms-2">Fecha: <?php echo $registro['fecha']; ?></div>
                         <div class="ms-2">Categoría: <?php echo $registro['categoria']; ?></div>
+                        <a href="editar_tarea.php?editar=<?php echo $registro['id']; ?>"><span class="badge bg-warning ms-2">Editar</span></a>
                         <a href="?id=<?php echo $registro['id'];?>"><span class="badge bg-danger ms-2">x</span></a>
                     </div>
                     </div>
