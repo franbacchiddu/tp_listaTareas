@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRUEBAS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .tachado { text-decoration:line-through;}
+    </style>
 </head>
 <body>
 <header>
@@ -41,15 +44,16 @@
             <ul class="list-group">
                 <?php foreach ($registros as $registro) : ?>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="checked">
-                        <label class="form-check-label" for="checked"><?php echo $registro['tarea']; ?></label>
-                    </div>
+                <form class="form-check" action="" method="post">
+                    <input type="hidden" name="id" value="<?php echo $registro['id'];?>">
+                    <input class="form-check-input" type="checkbox" name="completado" value="<?php echo $registro['completado'];?>" onChange="this.form.submit()" id="tarea_<?php echo $registro['id'];?>" <?php echo ($registro['completado']==1)?'checked':'';?>> 
+                    <label class="form-check-label <?php echo ($registro['completado']==1) ? 'tachado' : ''; ?>" for="checked" style="<?php echo ($registro['completado']==1) ? 'text-decoration: line-through;' : ''; ?>"><?php echo $registro['tarea']; ?></label>
+                </form>
                     <div class="d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="ms-2">Fecha: <?php echo $registro['fecha']; ?></div>
                         <div class="ms-2">Categoría: <?php echo $registro['categoria']; ?></div>
-                        <span class="badge bg-danger ms-2">x</span>
+                        <a href="?id=<?php echo $registro['id'];?>"><span class="badge bg-danger ms-2">x</span></a>
                     </div>
                     </div>
                 </li>
