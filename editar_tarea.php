@@ -17,7 +17,7 @@ if(isset($_POST['editar_tarea'])){
     $sql = "UPDATE tareas SET tarea=?, fecha=?, categoria=? WHERE id=?";
     $sentencia = $conn->prepare($sql);
     $sentencia->execute([$tarea, $fecha, $categoria, $id]);
-    header("Location: index.php");
+    header("Location: home_todolist.php");
     exit();
 }
 ?>
@@ -25,7 +25,7 @@ if(isset($_POST['editar_tarea'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    
 </head>
 <body>
     <header>
@@ -56,3 +56,4 @@ if(isset($_POST['editar_tarea'])){
     </main>
 </body>
 </html>
+
