@@ -1,11 +1,8 @@
 <?php
-try{
-$conn= new PDO ('mysql:host=localhost;dbname=apptodolist','root', '');
-}catch(PDOException $e){
-echo "Error de conexión" .$e->getMessage();
-}
+include("conexion/config.php");
 
-//Actualizar estado tarea
+session_start();
+
 
 if(isset($_POST['id'])){
     $id=$_POST['id'];
@@ -16,19 +13,17 @@ if(isset($_POST['id'])){
 
 }
 
-//Agregar tareas
-
 if(isset($_POST['agregar_tarea']))
 {
     $tarea = $_POST['tarea'];
     $fecha = $_POST['fecha']; 
     $categoria = $_POST['categoria']; 
-    $sql = 'INSERT INTO tareas (tarea, fecha, categoria) VALUES (?, ?, ?)'; 
+    $nombre_usuario = $_SESSION['nombre_usuario'];
+    $sql = 'INSERT INTO tareas (tarea, fecha, categoria, nombre_usuario) VALUES (?, ?, ?, ?)'; 
     $sentencia = $conn->prepare($sql);
-    $sentencia->execute([$tarea, $fecha, $categoria]);
+    $sentencia->execute([$tarea, $fecha, $categoria, $nombre_usuario]);
 }
 
-//Eliminar tareas
 
 if(isset($_GET ['id'])){
     $id = $_GET['id'];
@@ -37,16 +32,17 @@ if(isset($_GET ['id'])){
     $sentencia->execute([$id]);
 }
 
-// Filtrar tareas
 
 if (isset($_POST['filtro_categoria'])) {
     $filtro_categoria = $_POST['filtro_categoria'];
+    $nombre_usuario = $_POST['nombre_usuario'];
     if ($filtro_categoria !== "") {
-        $sql = "SELECT * FROM tareas WHERE categoria=?";
+        $sql = "SELECT * FROM tareas WHERE categoria=? AND nombre_usuario=?";
         $sentencia = $conn->prepare($sql);
-        $sentencia->execute([$filtro_categoria]);
+        $sentencia->execute([$filtro_categoria, $nombre_usuario]);
         $registros = $sentencia->fetchAll();
-
+        
+        
         ob_start();
         foreach ($registros as $registro) : ?>
             <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -69,10 +65,15 @@ if (isset($_POST['filtro_categoria'])) {
         $html_tareas = ob_get_clean();
         echo json_encode(['html' => $html_tareas]);
         exit;
-    }   
+    }
 
+    
+    
 }
 
 $sql="SELECT * FROM tareas";
 $registros=$conn->query($sql);
+
+?>
+
 

@@ -23,3 +23,4 @@ CREATE TABLE tareas (
   PRIMARY KEY (id),
   FOREIGN KEY (nombre_usuario) REFERENCES usuarios(nombre_usuario)
 );
+
