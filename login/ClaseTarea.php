@@ -11,15 +11,9 @@ class ClaseTarea {
         return $stmt->execute([$tarea, $completado, $fecha, $categoria, $nombre_usuario]);
     }
 
-    public function obtenerTareasPorUsuario($nombre_usuario) {
-        $stmt = $this->conn->prepare("SELECT * FROM tareas WHERE nombre_usuario = ?");
-        $stmt->execute([$nombre_usuario]);
-        return $stmt->fetchAll();
-    }
-
-    public function obtenerTareaPorNombreUsuario($nombre_usuario, $nombre_tarea) {
+    public function obtenerTareaPorNombreUsuario($nombre_usuario, $tarea) {
         $stmt = $this->conn->prepare("SELECT * FROM tareas WHERE nombre_usuario = ? AND tarea = ?");
-        $stmt->execute([$nombre_usuario, $nombre_tarea]);
+        $stmt->execute([$nombre_usuario, $tarea]);
         return $stmt->fetch();
     }
 
