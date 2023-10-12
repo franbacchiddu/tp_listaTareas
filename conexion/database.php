@@ -5,7 +5,7 @@ class Database {
     private $conn;
 
     public function __construct() {
-        global $host, $dbname, $username, $password; // Añade esta línea
+        global $host, $dbname, $username, $password; 
 
         try {
             $this->conn = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);

@@ -37,6 +37,7 @@ $total_tareas = $tareas->contarTareasPorNombreUsuario($nombre_usuario);
     <title>PRUEBAS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@latest/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         .tachado { text-decoration:line-through;}
         .icono-persona {
@@ -99,19 +100,18 @@ $total_tareas = $tareas->contarTareasPorNombreUsuario($nombre_usuario);
                 $tarea = $_POST['tarea'];
                 $completado = 0; 
                 $fecha = $_POST['fecha'];
-                $categoria = $_POST['categoria'];
+                $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : '';
                 $nombre_usuario = $_SESSION['nombre_usuario']; 
-            
-                // Verificar si la tarea ya existe
+
+            // Se recogen los datos del formulario y se valida si existen para el usuario actual, si no existe, la agrega.
                 $tareas = new ClaseTarea($database);
                 $tareaExistente = $tareas->obtenerTareaPorNombreUsuario($nombre_usuario, $tarea);
-            
-                if (!$tareaExistente) {
-                    $tareas->agregarTarea($tarea, $completado, $fecha, $categoria, $nombre_usuario);  
-                } else {
-                    // La tarea ya existe (agregado por que se duplicaban tareas)
+                    if (!$tareaExistente) {
+                        $tareas->agregarTarea($tarea, $completado, $fecha, $categoria, $nombre_usuario);  
+                    } else {
+                     echo '<div class="alert alert-success" role="alert">Tarea agregada con éxito.</div>';
                 }
-            }                   
+            }                      
             ?>
           <div class="mb-3">
          <form action="" method="post" id="form_filtrado">
@@ -131,7 +131,8 @@ $total_tareas = $tareas->contarTareasPorNombreUsuario($nombre_usuario);
                 Total de Tareas: <?php echo $total_tareas; ?>
                 </div>
          </form>
-                </div>   
+                </div>
+                <!-- Parte responsable de iterar sobre las tareas existentes y generar el código HTML para mostrarlas en la lista -->
             <ul class="list-group" id="lista_tareas">
                 <?php foreach ($registros as $registro) : ?>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -157,6 +158,28 @@ $total_tareas = $tareas->contarTareasPorNombreUsuario($nombre_usuario);
     </div>
     </div>
     </main>
+    <!-- Alerta completar formulario campos vacios -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('agregar_tarea').addEventListener('click', function(event) {
+        var tarea = document.getElementById('tarea').value;
+        var fecha = document.getElementById('fecha').value;
+        var categoria = document.getElementById('categoria').value;
+        if (tarea === '' || fecha === '' || categoria === '') {
+            event.preventDefault();
+            alert('Por favor, complete todos los campos.');
+        }
+    });
+    });
+</script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        $('.alert-success').fadeOut('slow');
+    }, 1000); // tiempo 
+});
+</script>
+    <!-- Aquí se envía el html del filtrado -->
 <script>
     document.getElementById('form_filtrado').addEventListener('submit', function(event) {
     event.preventDefault();

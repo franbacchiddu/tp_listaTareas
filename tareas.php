@@ -19,7 +19,7 @@
     {
         $tarea = $_POST['tarea'];
         $fecha = $_POST['fecha']; 
-        $categoria = $_POST['categoria']; 
+        $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : ''; 
         $nombre_usuario = $_SESSION['nombre_usuario'];
         $sql = 'INSERT INTO tareas (tarea, fecha, categoria, nombre_usuario) VALUES (?, ?, ?, ?)'; 
         $sentencia = $conn->prepare($sql);
