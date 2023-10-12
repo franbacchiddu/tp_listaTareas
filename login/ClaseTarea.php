@@ -22,6 +22,14 @@ class ClaseTarea {
         $stmt->execute([$nombre_usuario]);
         return $stmt->fetchAll();
     }
+
+    public function contarTareasPorNombreUsuario($nombre_usuario) {
+        $sql = "SELECT COUNT(*) FROM tareas WHERE nombre_usuario = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([$nombre_usuario]);
+        $total_tareas = $stmt->fetchColumn();
+        return $total_tareas;
+    }
 }
 ?>
 

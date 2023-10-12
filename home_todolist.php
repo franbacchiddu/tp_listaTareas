@@ -26,6 +26,7 @@ $apellido = $registro['apellido'];
 
 $tareas = new ClaseTarea($database);
 $registros = $tareas->obtenerTareasPorNombreUsuario($nombre_usuario);
+$total_tareas = $tareas->contarTareasPorNombreUsuario($nombre_usuario);
 ?>
 
 <!DOCTYPE html>
@@ -124,7 +125,11 @@ $registros = $tareas->obtenerTareasPorNombreUsuario($nombre_usuario);
                     <option value="otro">Otro</option>
                  </select>
                 <input type="submit" class="btn btn-primary mt-2" value="Filtrar">
-                <button class="btn btn-secondary mt-2" id="limpiar_filtro">Limpiar Filtro</button>    
+                <button class="btn btn-secondary mt-2" id="limpiar_filtro">Limpiar Filtro</button>
+                <div style="margin-top: 10px;"></div>
+                <div class="alert alert-info" role="alert">
+                Total de Tareas: <?php echo $total_tareas; ?>
+                </div>
          </form>
                 </div>   
             <ul class="list-group" id="lista_tareas">
@@ -164,7 +169,7 @@ $registros = $tareas->obtenerTareasPorNombreUsuario($nombre_usuario);
     .then(response => response.json())
     .then(data => {
         var listaTareas = document.getElementById('lista_tareas');
-        listaTareas.innerHTML = data.html; // Actualicé esta línea
+        listaTareas.innerHTML = data.html; 
     })
     .catch(error => console.error('Error:', error));
 });
