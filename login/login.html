@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="loginYRegistro.css">
+</head>
+<body>
+    <div class="container">
+    <form action="procesar_login.php" method="post">
+    <h2>Iniciar Sesión</h2>
+        <div class="form-group">
+        <label for="nombre_usuario">Nombre de Usuario:</label>
+        <input type="text" class="form-control" name="nombre_usuario" required>
+        <br>
+        </div>
+        <div class="form-group">
+        <label for="clave">Contraseña:</label>
+        <input type="password" class="form-control" name="clave" required>
+        <br>
+        </div>
+        <div class="registrarse">
+        <input type="submit" class="btn" value="Iniciar Sesión">
+        <br>
+        <br>
+        <div class="cuenta">
+        <p>¿No tienes una cuenta?</p>
+        <a href="register.html">Regístrate aquí</a>
+    </div>
+    </div>
+    </form>
+    </div>
+</body>
+</html>
