@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         // Si el nombre de usuario no existe, intentar registrar
         if ($usuario->registrar($nombre_usuario, $clave, $nombre, $apellido)) {
-            echo "Registro exitoso. ¡Ahora puedes <a href='login.php'>iniciar sesión</a>!";
+            echo "Registro exitoso. ¡Ahora puedes <a href='login.html'>iniciar sesión</a>!";
         } else {
             echo "Error en el registro.";
         }
